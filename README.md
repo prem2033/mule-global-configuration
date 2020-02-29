@@ -1,0 +1,1 @@
+# mule-global-configuration
