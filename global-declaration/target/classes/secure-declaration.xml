@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="d5f570c7-3ddd-47aa-890f-b44b5a0c3caa" >
+		<http:listener-connection host="0.0.0.0" port="${secure::http.port}" />
+	</http:listener-config>
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="ca02f944-8822-4f40-bfed-aea58a5476a5" file="${env.secure}.yaml" key="${env.key}" />
+	<flow name="secure-declarationFlow" doc:id="a333aefb-178a-422c-b82d-16724829c48f" >
+		<http:listener doc:name="Listener" doc:id="e06b9fa6-84cf-4399-876c-b6f77d2bcce0" config-ref="HTTP_Listener_config1" path="${secure::http.path}"/>
+		<set-payload value="the decrypted code of password is ${secure::db.password} and user name is ${secure::db.user}" doc:name="Set Payload" doc:id="6bcb4e49-1d2b-4eeb-8068-c5631168e8b1" />
+	</flow>
+</mule>
